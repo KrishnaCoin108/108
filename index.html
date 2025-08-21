@@ -88,6 +88,13 @@
             <h1>108K - KRISHNA Coin</h1>
             <p><em>Dharma. Community. Conscious Giving.</em></p>
             <p>A crypto initiative rooted in Vedic wisdom, dedicated to generating wealth for spiritual and charitable causes.</p>
+<!-- НАЧАЛО: Блок с адресом контракта -->
+<div style="margin: 1.5rem auto; padding: 0.8rem; background-color: rgba(255, 179, 0, 0.1); border-radius: 8px; max-width: 90%;">
+    <p style="margin: 0; font-size: 0.95rem; color: #4A2C2A;"><strong>CA (SOL):</strong> <span id="contract-address" style="font-family: monospace; word-break: break-all;">Contract address will appear here after launch</span></p>
+    <button onclick="copyContractAddress()" style="margin-top: 0.5rem; background: #E65100; color: white; border: none; border-radius: 4px; padding: 0.3rem 0.8rem; cursor: pointer; font-size: 0.8rem;">Copy CA</button>
+    <p id="copy-ca-notification" style="font-size: 0.8rem; color: green; margin: 0.5rem 0 0 0; display: none;">✅ Contract address copied!</p>
+</div>
+<!-- КОНЕЦ: Блока с адресом контракта -->
                         <a href="https://t.me/Community108KChat" class="button">Join the TG Community</a>
             <a href="https://t.me/Community108KChat" class="button">View Chart</a>
         </section>
@@ -241,9 +248,31 @@
 
         // Запускаем счетчик при загрузке страницы
         updateCounter();
+// Функция для копирования адреса контракта
+        function copyContractAddress() {
+            const addressText = document.getElementById('contract-address').innerText;
+            // Проверяем, что адрес уже заменен на реальный, а не заглушка
+            if (addressText.includes('Contract address will appear')) {
+                alert('The contract has not been launched yet. Please check our Telegram for updates.');
+                return;
+            }
+            navigator.clipboard.writeText(addressText)
+                .then(() => {
+                    const notification = document.getElementById('copy-ca-notification');
+                    notification.style.display = 'block';
+                    setTimeout(() => {
+                        notification.style.display = 'none';
+                    }, 2000);
+                })
+                .catch(err => {
+                    console.error('Failed to copy: ', err);
+                    alert('Failed to copy address. Please select and copy it manually.');
+                });
+        }
     </script>
 </body>
 </html>
+
 
 
 
