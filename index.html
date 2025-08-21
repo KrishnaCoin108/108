@@ -164,7 +164,7 @@
 
     </div>
 
-    <footer>
+        <footer>
         <div class="container">
             <p>108K (KRISHNA Coin) is a community token. This is not financial advice.</p>
             
@@ -178,12 +178,37 @@
                     <li>🌐 Website Improvements</li>
                 </ul>
                 <p style="margin: 0.5rem 0;"><strong>SOL Address:</strong></p>
-                <p style="word-break: break-all; background-color: rgba(0,0,0,0.03); padding: 0.5rem; border-radius: 3px; font-family: monospace; font-size: 0.8rem;">
-                DoJt6HW2miq2mfCNU1LttEyrnJvWAW74Xuog6GA1i328
-                </p>
+                <div style="display: flex; align-items: center; justify-content: center; background-color: rgba(0,0,0,0.03); padding: 0.5rem; border-radius: 3px;">
+                    <p id="sol-address" style="word-break: break-all; margin: 0; font-family: monospace; font-size: 0.8rem; flex-grow: 1;">
+                        DoJt6HW2miq2mfCNU1LttEyrnJvWAW74Xuog6GA1i328
+                    </p>
+                    <button id="copy-btn" style="margin-left: 10px; background: #E65100; color: white; border: none; border-radius: 3px; padding: 0.25rem 0.5rem; cursor: pointer; font-size: 0.8rem;" onclick="copyAddress()">Copy</button>
+                </div>
+                <p id="copy-notification" style="font-size: 0.8rem; color: green; margin: 0.5rem 0; display: none;">✅ Address copied!</p>
                 <p style="font-size: 0.8rem; font-style: italic;">All transactions are public and verifiable on-chain.</p>
             </div>
             <!-- Конец блока поддержки -->
+
+            <!-- Блок счетчика посетителей -->
+            <div style="display: flex; align-items: center; justify-content: center; gap: 8px; margin: 1rem 0; color: #8D6E63;">
+                <!-- Иконка лотоса -->
+                <svg width="20" height="20" viewBox="0 0 100 100" style="fill: #FFB300;">
+                    <path d="M50 20 A5 5 0 1 0 50 20.1 Z" />
+                    <path d="M35 30 A5 5 0 1 0 35 30.1 Z" />
+                    <path d="M65 30 A5 5 0 1 0 65 30.1 Z" />
+                    <path d="M25 45 A5 5 0 1 0 25 45.1 Z" />
+                    <path d="M75 45 A5 5 0 1 0 75 45.1 Z" />
+                    <path d="M20 65 A5 5 0 1 0 20 65.1 Z" />
+                    <path d="M80 65 A5 5 0 1 0 80 65.1 Z" />
+                    <path d="M40 75 A5 5 0 1 0 40 75.1 Z" />
+                    <path d="M60 75 A5 5 0 1 0 60 75.1 Z" />
+                    <path d="M50 85 A5 5 0 1 0 50 85.1 Z" />
+                    <circle cx="50" cy="50" r="10" stroke="#FFB300" stroke-width="2" fill="none" />
+                </svg>
+                <span>Visitors: </span>
+                <span id="website-counter" style="font-weight: bold;">--</span>
+            </div>
+            <!-- Конец блока счетчика -->
             
             <p>
                 <a href="https://x.com/Toptoday8?t=mHZrtt0o_2yeGRgeAzIhgg&s=09" style="color: #E65100;">Twitter</a> | 
@@ -192,10 +217,46 @@
             <p>ॐ</p>
         </div>
     </footer>
+
+    <!-- Скрипты должны быть прямо перед закрывающим тегом body -->
+    <script>
+        // Функция для копирования SOL-адреса
+        function copyAddress() {
+            const addressText = document.getElementById('sol-address').innerText;
+            navigator.clipboard.writeText(addressText)
+                .then(() => {
+                    const notification = document.getElementById('copy-notification');
+                    notification.style.display = 'block';
+                    setTimeout(() => {
+                        notification.style.display = 'none';
+                    }, 2000);
+                })
+                .catch(err => {
+                    console.error('Failed to copy: ', err);
+                    alert('Failed to copy address. Please select and copy it manually.');
+                });
+        }
+
+        // Функция для счетчика посетителей
+        function updateCounter() {
+            fetch('https://api.countapi.xyz/hit/krishnacoin108.github.io/108')
+            .then(response => response.json())
+            .then(data => {
+                const formattedValue = new Intl.NumberFormat().format(data.value);
+                document.getElementById('website-counter').textContent = formattedValue;
+            })
+            .catch(err => {
+                console.error('Failed to fetch visitor count:', err);
+                document.getElementById('website-counter').textContent = '1,000+';
+            });
+        }
+
+        // Запускаем счетчик при загрузке страницы
+        updateCounter();
+    </script>
 </body>
-
-
 </html>
+
 
 
 
